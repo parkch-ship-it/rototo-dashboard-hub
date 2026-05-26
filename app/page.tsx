@@ -142,6 +142,16 @@ const DASHBOARDS: Dashboard[] = [
     icon: '⚙',
     status: 'live',
   },
+  {
+    name: '원가분석 대시보드',
+    desc: '품목별 원가 구성 및 마진 분석',
+    owner: '박철',
+    team: '생산품질팀',
+    category: '생산',
+    url: 'https://rototobebe-cost-dashboard.vercel.app/?year=2025',
+    icon: '◰',
+    status: 'live',
+  },
   // CS
   {
     name: '교환/반품 취소율 데이터',
