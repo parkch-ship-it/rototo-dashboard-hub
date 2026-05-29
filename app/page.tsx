@@ -61,16 +61,6 @@ const DASHBOARDS: Dashboard[] = [
     icon: '◷',
     status: 'live',
   },
-  {
-    name: '판매/정산 대시보드',
-    desc: '매출/정산 관리 및 룰 세팅',
-    owner: '조현진',
-    team: '상품기획팀',
-    category: '매출 및 예산 집행',
-    url: 'https://rototobebe-dashboard.vercel.app/sales',
-    icon: '₩',
-    status: 'pending',
-  },
   // 상품기획
   {
     name: '할인율 대시보드',
