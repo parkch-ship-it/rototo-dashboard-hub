@@ -6,6 +6,7 @@ type Category =
   | '상품기획'
   | '마케팅'
   | '생산'
+  | '디자인'
   | 'CS';
 
 type Dashboard = {
@@ -25,6 +26,7 @@ const CATEGORIES: { key: Category; desc: string }[] = [
   { key: '상품기획', desc: '할인 정책 및 상품 속성 데이터 분석' },
   { key: '마케팅', desc: 'SNS·콘텐츠 운영 현황과 성과 추적' },
   { key: '생산', desc: '생산 단계별 진행 상황 추적' },
+  { key: '디자인', desc: '시즌 MDP 및 디자인실 일정 관리' },
   { key: 'CS', desc: '교환·반품·취소 데이터 분석' },
 ];
 
@@ -151,6 +153,17 @@ const DASHBOARDS: Dashboard[] = [
     category: '생산',
     url: 'https://rototobebe-cost-dashboard.vercel.app/?year=2025',
     icon: '◰',
+    status: 'live',
+  },
+  // 디자인
+  {
+    name: '디자인실 일정 관리 대시보드',
+    desc: '시즌 MDP 관리 및 스케쥴 공유',
+    owner: '김보경',
+    team: '디자인팀',
+    category: '디자인',
+    url: 'https://design-dashboard-eosin.vercel.app/dashboard',
+    icon: '✦',
     status: 'live',
   },
   // CS
