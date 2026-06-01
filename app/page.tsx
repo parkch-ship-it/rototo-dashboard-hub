@@ -7,8 +7,7 @@ type Category =
   | '상품기획'
   | '브랜드마케팅'
   | '퍼포먼스마케팅'
-  | '생산'
-  | '원가관리'
+  | '생산, 원가관리'
   | 'CX관리';
 
 type Dashboard = {
@@ -29,8 +28,7 @@ const CATEGORIES: Category[] = [
   '상품기획',
   '브랜드마케팅',
   '퍼포먼스마케팅',
-  '생산',
-  '원가관리',
+  '생산, 원가관리',
   'CX관리',
 ];
 
@@ -149,7 +147,7 @@ const DASHBOARDS: Dashboard[] = [
     desc: '생산 단계별 진행 상황',
     owner: '박철',
     team: '생산품질팀',
-    category: '생산',
+    category: '생산, 원가관리',
     url: 'https://production-dashboard-next.vercel.app/',
     icon: '⚙',
     status: 'live',
@@ -159,7 +157,7 @@ const DASHBOARDS: Dashboard[] = [
     desc: '시즌별, 카테고리별 원가율 분석',
     owner: '박철',
     team: '생산품질팀',
-    category: '원가관리',
+    category: '생산, 원가관리',
     url: 'https://rototobebe-cost-dashboard.vercel.app/?year=2025',
     icon: '◰',
     status: 'live',
