@@ -34,7 +34,7 @@ const CATEGORIES: Category[] = [
 
 const DASHBOARDS: Dashboard[] = [
   {
-    name: '경영 전략 종합 대시보드',
+    name: '경영 전략 종합',
     desc: '경영 전략 종합 인사이트',
     owner: '배상현',
     team: '대표이사',
@@ -84,7 +84,7 @@ const DASHBOARDS: Dashboard[] = [
     status: 'live',
   },
   {
-    name: '디자인실 일정 관리 대시보드',
+    name: '디자인실 일정 관리',
     desc: '시즌 MDP 관리 및 스케쥴 공유',
     owner: '김보경',
     team: '디자인팀',
