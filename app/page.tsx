@@ -2,12 +2,14 @@ type Status = 'live' | 'pending';
 
 type Category =
   | '경영전략'
-  | '매출 및 예산 집행'
+  | '매출'
+  | '관리'
   | '상품기획'
-  | '마케팅'
+  | '브랜드마케팅'
+  | '퍼포먼스마케팅'
   | '생산'
-  | '디자인'
-  | 'CS';
+  | '원가관리'
+  | 'CX관리';
 
 type Dashboard = {
   name: string;
@@ -20,21 +22,22 @@ type Dashboard = {
   status: Status;
 };
 
-const CATEGORIES: { key: Category; desc: string }[] = [
-  { key: '경영전략', desc: '경영 의사결정을 위한 종합 인사이트' },
-  { key: '매출 및 예산 집행', desc: '판매 실적과 예산·정산 현황 관리' },
-  { key: '상품기획', desc: '할인 정책 및 상품 속성 데이터 분석' },
-  { key: '마케팅', desc: 'SNS·콘텐츠 운영 현황과 성과 추적' },
-  { key: '생산', desc: '생산 단계별 진행 상황 추적' },
-  { key: '디자인', desc: '시즌 MDP 및 디자인실 일정 관리' },
-  { key: 'CS', desc: '교환·반품·취소 데이터 분석' },
+const CATEGORIES: Category[] = [
+  '경영전략',
+  '매출',
+  '관리',
+  '상품기획',
+  '브랜드마케팅',
+  '퍼포먼스마케팅',
+  '생산',
+  '원가관리',
+  'CX관리',
 ];
 
 const DASHBOARDS: Dashboard[] = [
-  // 경영전략
   {
     name: '경영 전략 종합 대시보드',
-    desc: '경영 전략 수립을 위한 종합 인사이트',
+    desc: '경영 전략 종합 인사이트',
     owner: '배상현',
     team: '대표이사',
     category: '경영전략',
@@ -42,31 +45,29 @@ const DASHBOARDS: Dashboard[] = [
     icon: '◆',
     status: 'live',
   },
-  // 매출 및 예산 집행
   {
-    name: '판매 대시보드',
-    desc: '상품별 일일 판매 현황과 채널 성과',
+    name: '상품 판매분석',
+    desc: '상품별 일일 판매 현황',
     owner: '배상현',
     team: '대표이사',
-    category: '매출 및 예산 집행',
+    category: '매출',
     url: 'https://sales-dashboard-topaz-seven.vercel.app/product-daily',
     icon: '$',
     status: 'live',
   },
   {
-    name: '예산관리 대시보드',
-    desc: '예산 집행 현황 및 잔여 한도 관리',
+    name: '예산관리',
+    desc: '예산 집행 및 관리',
     owner: '이종민',
     team: '경영지원본부',
-    category: '매출 및 예산 집행',
+    category: '관리',
     url: 'https://ax-dashboard-opal.vercel.app/budget',
     icon: '◷',
     status: 'live',
   },
-  // 상품기획
   {
-    name: '할인율 대시보드',
-    desc: '판매처/상품별 할인율 분석 및 마크다운 추세',
+    name: '할인율 분석',
+    desc: '판매처/상품별 할인율 분석',
     owner: '김지선',
     team: '상품기획팀',
     category: '상품기획',
@@ -75,7 +76,7 @@ const DASHBOARDS: Dashboard[] = [
     status: 'live',
   },
   {
-    name: 'ASSORT 대시보드',
+    name: 'ASSORT 분석',
     desc: '상품 속성별 사이즈 DATA 분석',
     owner: '김지선',
     team: '상품기획팀',
@@ -84,60 +85,68 @@ const DASHBOARDS: Dashboard[] = [
     icon: '▤',
     status: 'live',
   },
-  // 마케팅
+  {
+    name: '디자인실 일정 관리 대시보드',
+    desc: '시즌 MDP 관리 및 스케쥴 공유',
+    owner: '김보경',
+    team: '디자인팀',
+    category: '상품기획',
+    url: 'https://design-dashboard-eosin.vercel.app/dashboard',
+    icon: '✦',
+    status: 'live',
+  },
   {
     name: '인스타그램 운영 지표',
     desc: '인스타 채널 일별 지표 (메타 비즈니스 데이터)',
     owner: '김선애',
     team: '영업마케팅팀',
-    category: '마케팅',
+    category: '브랜드마케팅',
     url: 'https://rototobebe-mkt.vercel.app',
     icon: '◉',
     status: 'live',
   },
   {
-    name: '로덕메이트 여름 운영 현황',
-    desc: '로덕메이트 멤버 적립금 현황',
+    name: '로덬메이트 여름 운영 현황',
+    desc: '로덬메이트 멤버 적립금 현황',
     owner: '김선애',
     team: '영업마케팅팀',
-    category: '마케팅',
+    category: '브랜드마케팅',
     url: 'https://roduk-deploy.vercel.app',
     icon: '☀',
     status: 'live',
   },
   {
-    name: '네이버 쇼핑 키워드 분석',
-    desc: '월간/주간 네이버 쇼핑 키워드 분석',
+    name: '네이버 쇼핑 키워드 분석(월간/주간)',
+    desc: '네이버 쇼핑 키워드 분석',
     owner: '김선애',
     team: '영업마케팅팀',
-    category: '마케팅',
+    category: '브랜드마케팅',
     url: 'https://insight-deploy.vercel.app',
     icon: '⌕',
     status: 'live',
   },
   {
-    name: '로토토베베 사이즈 추천 도구',
-    desc: '권장 사이즈 기준표 + 질병관리청 2017 소아청소년 성장도표 기반',
+    name: '로토토베베 사이즈 추천폼',
+    desc: 'ROTOTOBEBE 사이즈 추천 도구',
     owner: '김선애',
     team: '영업마케팅팀',
-    category: '마케팅',
+    category: '퍼포먼스마케팅',
     url: 'https://rototobebe-size.vercel.app',
     icon: '⊕',
     status: 'live',
   },
   {
-    name: '로덕메이트 운영 자동화',
-    desc: '로덕메이트 운영 자동화 (예정)',
+    name: '로덬메이트 운영 자동화',
+    desc: '로덬메이트 운영 자동화 (예정)',
     owner: '김선애',
     team: '영업마케팅팀',
-    category: '마케팅',
+    category: '퍼포먼스마케팅',
     icon: '⚡',
     status: 'pending',
   },
-  // 생산
   {
     name: '의류 생산 공정 현황',
-    desc: '생산 단계별 진행 상황을 단일 보드에서 추적',
+    desc: '생산 단계별 진행 상황',
     owner: '박철',
     team: '생산품질팀',
     category: '생산',
@@ -146,33 +155,21 @@ const DASHBOARDS: Dashboard[] = [
     status: 'live',
   },
   {
-    name: '원가분석 대시보드',
-    desc: '품목별 원가 구성 및 마진 분석',
+    name: '원가현황 분석',
+    desc: '시즌별, 카테고리별 원가율 분석',
     owner: '박철',
     team: '생산품질팀',
-    category: '생산',
+    category: '원가관리',
     url: 'https://rototobebe-cost-dashboard.vercel.app/?year=2025',
     icon: '◰',
     status: 'live',
   },
-  // 디자인
-  {
-    name: '디자인실 일정 관리 대시보드',
-    desc: '시즌 MDP 관리 및 스케쥴 공유',
-    owner: '김보경',
-    team: '디자인팀',
-    category: '디자인',
-    url: 'https://design-dashboard-eosin.vercel.app/dashboard',
-    icon: '✦',
-    status: 'live',
-  },
-  // CS
   {
     name: '교환/반품 취소율 데이터',
-    desc: '교환·반품·취소 사유와 비율 데이터 분석',
+    desc: '교환·반품·취소 데이터 분석',
     owner: '이상희',
     team: 'CX팀',
-    category: 'CS',
+    category: 'CX관리',
     url: 'https://y-dusky-seven-89.vercel.app/',
     icon: '↺',
     status: 'live',
@@ -200,15 +197,13 @@ export default function HomePage() {
         <h1 className="section-title">기능별 대시보드 — AI 교육을 통해 직접 제작</h1>
 
         {CATEGORIES.map((cat) => {
-          const list = DASHBOARDS.filter((d) => d.category === cat.key);
+          const list = DASHBOARDS.filter((d) => d.category === cat);
           if (list.length === 0) return null;
           return (
-            <section key={cat.key} className="cat-section">
+            <section key={cat} className="cat-section">
               <div className="cat-head">
                 <span className="team-dot" />
-                <span className="cat-name">{cat.key}</span>
-                <span className="cat-desc">{cat.desc}</span>
-                <span className="team-count">· {list.length}개</span>
+                <span className="cat-name">{cat}</span>
               </div>
               <div className="dash-grid">
                 {list.map((d) => {
@@ -224,7 +219,7 @@ export default function HomePage() {
                       <div className="dash-meta">
                         <span className="dash-owner">{d.team} · {d.owner}</span>
                         <span className={`dash-status ${isLive ? '' : 'pending'}`}>
-                          {isLive ? '운영 중' : '준비 중'}
+                          {isLive ? '완료' : '개발중'}
                         </span>
                       </div>
                     </>
