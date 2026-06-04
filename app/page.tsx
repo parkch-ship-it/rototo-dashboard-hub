@@ -172,6 +172,15 @@ const DASHBOARDS: Dashboard[] = [
     icon: '↺',
     status: 'live',
   },
+  {
+    name: '시즌별 불량 현황',
+    desc: '시즌별 불량 상품 취합 및 비교',
+    owner: '강민선',
+    team: 'CX팀',
+    category: 'CX관리',
+    icon: '⚠',
+    status: 'pending',
+  },
 ];
 
 export default function HomePage() {
