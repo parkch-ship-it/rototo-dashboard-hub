@@ -178,8 +178,9 @@ const DASHBOARDS: Dashboard[] = [
     owner: '강민선',
     team: 'CX팀',
     category: 'CX관리',
+    url: 'https://quality-dashboard-five.vercel.app',
     icon: '⚠',
-    status: 'pending',
+    status: 'live',
   },
 ];
 
