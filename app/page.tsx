@@ -4,7 +4,9 @@ type Category =
   | '경영전략'
   | '매출'
   | '관리'
+  | '관리자'
   | '상품기획'
+  | '상품관리'
   | '브랜드마케팅'
   | '퍼포먼스마케팅'
   | '생산, 원가관리'
@@ -25,7 +27,9 @@ const CATEGORIES: Category[] = [
   '경영전략',
   '매출',
   '관리',
+  '관리자',
   '상품기획',
+  '상품관리',
   '브랜드마케팅',
   '퍼포먼스마케팅',
   '생산, 원가관리',
@@ -54,6 +58,26 @@ const DASHBOARDS: Dashboard[] = [
     status: 'live',
   },
   {
+    name: 'FP&A 대시보드',
+    desc: 'FP&A 대시보드 웹페이지',
+    owner: '렛서',
+    team: '전사',
+    category: '매출',
+    url: 'https://rototobebe-fpna.vercel.app/',
+    icon: '∑',
+    status: 'live',
+  },
+  {
+    name: '판매처 데이터 자동 업로드',
+    desc: '판매처별 데이터 자동 업로드 도구 웹페이지',
+    owner: '렛서',
+    team: '전사',
+    category: '매출',
+    url: 'https://rototobebe-data-loader.vercel.app/',
+    icon: '⇪',
+    status: 'live',
+  },
+  {
     name: '예산관리',
     desc: '예산 집행 및 관리',
     owner: '이종민',
@@ -61,6 +85,16 @@ const DASHBOARDS: Dashboard[] = [
     category: '관리',
     url: 'https://ax-dashboard-opal.vercel.app/budget',
     icon: '◷',
+    status: 'live',
+  },
+  {
+    name: '권한 관리',
+    desc: '웹페이지 별 접근권한 관리 웹페이지',
+    owner: '렛서',
+    team: '전사',
+    category: '관리자',
+    url: 'https://rototobebe-admin.vercel.app/',
+    icon: '⚿',
     status: 'live',
   },
   {
@@ -91,6 +125,16 @@ const DASHBOARDS: Dashboard[] = [
     category: '상품기획',
     url: 'https://design-dashboard-eosin.vercel.app/dashboard',
     icon: '✦',
+    status: 'live',
+  },
+  {
+    name: '상세페이지 제작 웹앱',
+    desc: '상품관리 마스터 웹페이지',
+    owner: '렛서',
+    team: '전사',
+    category: '상품관리',
+    url: 'https://rototobebe-master.vercel.app/',
+    icon: '▦',
     status: 'live',
   },
   {
@@ -141,6 +185,36 @@ const DASHBOARDS: Dashboard[] = [
     category: '퍼포먼스마케팅',
     icon: '⚡',
     status: 'pending',
+  },
+  {
+    name: '마케팅 소재 생성',
+    desc: '퍼포먼스 마케팅 소재 생성 웹페이지',
+    owner: '렛서',
+    team: '전사',
+    category: '퍼포먼스마케팅',
+    url: 'https://rototobebe-ad-studio.vercel.app/',
+    icon: '✧',
+    status: 'live',
+  },
+  {
+    name: '마케팅 대시보드',
+    desc: '퍼포먼스 마케팅 대시보드 웹페이지',
+    owner: '렛서',
+    team: '전사',
+    category: '퍼포먼스마케팅',
+    url: 'https://rototobebe-performance-ui.vercel.app/',
+    icon: '◈',
+    status: 'live',
+  },
+  {
+    name: '마켓 센싱',
+    desc: '마켓 센싱 웹페이지',
+    owner: '렛서',
+    team: '전사',
+    category: '퍼포먼스마케팅',
+    url: 'https://rototobebe-market-sensing.vercel.app/',
+    icon: '⊛',
+    status: 'live',
   },
   {
     name: '의류 생산 공정 현황',
