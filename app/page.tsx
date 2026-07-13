@@ -3,24 +3,22 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 type Status = 'live' | 'pending';
+type Developer = '렛서' | '사내';
 
 type Category =
-  | '상품관리'
-  | '매출'
-  | '퍼포먼스마케팅'
-  | '경영전략'
-  | '관리'
-  | '상품기획'
-  | '브랜드마케팅'
-  | '생산, 원가관리'
-  | 'CX관리'
+  | '경영/전략'
+  | '상품'
+  | '생산/품질'
+  | '마케팅'
+  | '영업'
+  | 'CX'
   | '관리자';
 
 type Dashboard = {
   name: string;
   desc: string;
   owner: string;
-  team: string;
+  developer: Developer;
   category: Category;
   url?: string;
   status: Status;
@@ -28,51 +26,174 @@ type Dashboard = {
 };
 
 const CATEGORIES: { key: Category; icon: string }[] = [
-  { key: '상품관리', icon: '▦' },
-  { key: '매출', icon: '$' },
-  { key: '퍼포먼스마케팅', icon: '⚡' },
-  { key: '경영전략', icon: '◆' },
-  { key: '관리', icon: '◷' },
-  { key: '상품기획', icon: '%' },
-  { key: '브랜드마케팅', icon: '◉' },
-  { key: '생산, 원가관리', icon: '⚙' },
-  { key: 'CX관리', icon: '↺' },
+  { key: '경영/전략', icon: '◆' },
+  { key: '상품', icon: '▤' },
+  { key: '생산/품질', icon: '⚙' },
+  { key: '마케팅', icon: '⚡' },
+  { key: '영업', icon: '$' },
+  { key: 'CX', icon: '↺' },
   { key: '관리자', icon: '⚿' },
 ];
 
 const DASHBOARDS: Dashboard[] = [
-  // 상품관리
-  { name: '상세페이지 제작 웹앱', desc: '상품관리 마스터 웹페이지', owner: '렛서', team: '전사', category: '상품관리', url: 'https://rototobebe-master.vercel.app/', status: 'live', embedBlocked: true },
-  // 매출
-  { name: 'FP&A 대시보드', desc: 'FP&A 대시보드 웹페이지', owner: '렛서', team: '전사', category: '매출', url: 'https://rototobebe-fpna.vercel.app/', status: 'live', embedBlocked: true },
-  { name: '판매처 데이터 자동 업로드', desc: '판매처별 데이터 자동 업로드 도구 웹페이지', owner: '렛서', team: '전사', category: '매출', url: 'https://rototobebe-data-loader.vercel.app/', status: 'live', embedBlocked: true },
-  { name: '상품 판매분석', desc: '상품별 일일 판매 현황', owner: '배상현', team: '대표이사', category: '매출', url: 'https://sales-dashboard-topaz-seven.vercel.app/product-daily', status: 'pending' },
-  // 퍼포먼스마케팅
-  { name: '마케팅 소재 생성', desc: '퍼포먼스 마케팅 소재 생성 웹페이지', owner: '렛서', team: '전사', category: '퍼포먼스마케팅', url: 'https://rototobebe-ad-studio.vercel.app/', status: 'live', embedBlocked: true },
-  { name: '마케팅 대시보드', desc: '퍼포먼스 마케팅 대시보드 웹페이지', owner: '렛서', team: '전사', category: '퍼포먼스마케팅', url: 'https://rototobebe-performance-ui.vercel.app/', status: 'live', embedBlocked: true },
-  { name: '마켓 센싱', desc: '마켓 센싱 웹페이지', owner: '렛서', team: '전사', category: '퍼포먼스마케팅', url: 'https://rototobebe-market-sensing.vercel.app/', status: 'live', embedBlocked: true },
-  { name: '로토토베베 사이즈 추천폼', desc: 'ROTOTOBEBE 사이즈 추천 도구', owner: '김선애', team: '영업마케팅팀', category: '퍼포먼스마케팅', url: 'https://rototobebe-size.vercel.app', status: 'live' },
-  { name: '로덬메이트 운영 자동화', desc: '로덬메이트 운영 자동화 (예정)', owner: '김선애', team: '영업마케팅팀', category: '퍼포먼스마케팅', status: 'pending' },
-  // 경영전략
-  { name: '경영 전략 종합', desc: '경영 전략 종합 인사이트', owner: '배상현', team: '대표이사', category: '경영전략', url: 'https://kidsintel-dashboard.vercel.app/', status: 'pending' },
-  // 관리
-  { name: '예산관리', desc: '예산 집행 및 관리', owner: '이종민', team: '경영지원본부', category: '관리', url: 'https://ax-dashboard-opal.vercel.app/budget', status: 'live' },
-  // 상품기획
-  { name: '할인율 분석', desc: '판매처/상품별 할인율 분석', owner: '김지선', team: '상품기획팀', category: '상품기획', url: 'https://rototo-dashboard.vercel.app/dashboard', status: 'live' },
-  { name: 'ASSORT 분석', desc: '상품 속성별 사이즈 DATA 분석', owner: '김지선', team: '상품기획팀', category: '상품기획', url: 'https://rototo-dash-v2.vercel.app/assort', status: 'live' },
-  { name: '디자인실 일정 관리', desc: '시즌 MDP 관리 및 스케쥴 공유', owner: '김보경', team: '디자인팀', category: '상품기획', url: 'https://design-dashboard-eosin.vercel.app/dashboard', status: 'live' },
-  // 브랜드마케팅
-  { name: '인스타그램 운영 지표', desc: '인스타 채널 일별 지표 (메타 비즈니스 데이터)', owner: '김선애', team: '영업마케팅팀', category: '브랜드마케팅', url: 'https://rototobebe-mkt.vercel.app', status: 'live' },
-  { name: '로덬메이트 여름 운영 현황', desc: '로덬메이트 멤버 적립금 현황', owner: '김선애', team: '영업마케팅팀', category: '브랜드마케팅', url: 'https://roduk-deploy.vercel.app', status: 'live' },
-  { name: '네이버 쇼핑 키워드 분석(월간/주간)', desc: '네이버 쇼핑 키워드 분석', owner: '김선애', team: '영업마케팅팀', category: '브랜드마케팅', url: 'https://insight-deploy.vercel.app', status: 'live' },
-  // 생산, 원가관리
-  { name: '의류 생산 공정 현황', desc: '생산 단계별 진행 상황', owner: '박철', team: '생산품질팀', category: '생산, 원가관리', url: 'https://production-dashboard-next.vercel.app/', status: 'live' },
-  { name: '원가현황 분석', desc: '시즌별, 카테고리별 원가율 분석', owner: '박철', team: '생산품질팀', category: '생산, 원가관리', url: 'https://rototobebe-cost-dashboard.vercel.app/?year=2025', status: 'live' },
-  // CX관리
-  { name: '교환/반품 취소율 데이터', desc: '교환·반품·취소 데이터 분석', owner: '이상희', team: 'CX팀', category: 'CX관리', url: 'https://y-dusky-seven-89.vercel.app/', status: 'live' },
-  { name: '시즌별 불량 현황', desc: '시즌별 불량 상품 취합 및 비교', owner: '강민선', team: 'CX팀', category: 'CX관리', url: 'https://quality-dashboard-five.vercel.app', status: 'live' },
-  // 관리자 (최하단)
-  { name: '권한 관리', desc: '웹페이지 별 접근권한 관리 웹페이지', owner: '렛서', team: '전사', category: '관리자', url: 'https://rototobebe-admin.vercel.app/', status: 'live', embedBlocked: true },
+  // 1. 경영/전략
+  {
+    name: '1-1. 마켓 센싱',
+    desc: '마켓 센싱 웹페이지',
+    owner: '김선애',
+    developer: '렛서',
+    category: '경영/전략',
+    url: 'https://rototobebe-market-sensing.vercel.app/dashboard',
+    status: 'live',
+    embedBlocked: true,
+  },
+  {
+    name: '1-2. 판매 대시보드(FP&A)',
+    desc: 'DB적재완료 후 사용',
+    owner: '신규담당자 (입사 전까지 조현진)',
+    developer: '렛서',
+    category: '경영/전략',
+    url: 'https://rototobebe-fpna.vercel.app/',
+    status: 'pending',
+    embedBlocked: true,
+  },
+  {
+    name: '1-3. 부서별 예산관리',
+    desc: '내용확인필요',
+    owner: '이종민',
+    developer: '사내',
+    category: '경영/전략',
+    url: 'https://ax-dashboard-opal.vercel.app/budget',
+    status: 'pending',
+  },
+  // 2. 상품
+  {
+    name: '2-1. SIZE별 판매 현황',
+    desc: '상품 속성별 사이즈 판매 분석',
+    owner: '김지선',
+    developer: '사내',
+    category: '상품',
+    url: 'https://rototo-dash-v2.vercel.app/assort',
+    status: 'live',
+  },
+  {
+    name: '2-2. 디자인실 MDP',
+    desc: '시즌 MDP 관리 및 스케쥴 공유',
+    owner: '김보경',
+    developer: '사내',
+    category: '상품',
+    url: 'https://design-dashboard-eosin.vercel.app/dashboard',
+    status: 'live',
+  },
+  // 3. 생산/품질
+  {
+    name: '3-1. 시즌별 생산 진행 현황',
+    desc: '생산 단계별 진행 상황',
+    owner: '박철',
+    developer: '사내',
+    category: '생산/품질',
+    url: 'https://production-dashboard-next.vercel.app/',
+    status: 'live',
+  },
+  {
+    name: '3-2. 원가현황',
+    desc: '시즌별·카테고리별 원가율 분석',
+    owner: '박철',
+    developer: '사내',
+    category: '생산/품질',
+    url: 'https://rototobebe-cost-dashboard.vercel.app/?year=2025',
+    status: 'live',
+  },
+  // 4. 마케팅
+  {
+    name: '4-1. 퍼포먼스 마케팅 실적',
+    desc: '데이터 일부검증 필요',
+    owner: '이나영',
+    developer: '렛서',
+    category: '마케팅',
+    url: 'https://rototobebe-performance-ui.vercel.app/',
+    status: 'pending',
+    embedBlocked: true,
+  },
+  {
+    name: '4-2. 퍼포먼스 마케팅 소재생성',
+    desc: '사용중',
+    owner: '이나영',
+    developer: '렛서',
+    category: '마케팅',
+    url: 'https://rototobebe-ad-studio.vercel.app/',
+    status: 'live',
+    embedBlocked: true,
+  },
+  {
+    name: '4-3. 브랜드마케팅 운영',
+    desc: '현재 접속 안 됨, 페이지 통합 예정 (인스타·네이버·로덬메이트)',
+    owner: '김선애',
+    developer: '사내',
+    category: '마케팅',
+    url: 'https://rototobebe-mkt.vercel.app/',
+    status: 'pending',
+  },
+  // 5. 영업
+  {
+    name: '5-1. 상품 판매분석',
+    desc: 'DB적재완료 후 사용',
+    owner: '배상현',
+    developer: '사내',
+    category: '영업',
+    url: 'https://sales-dashboard-topaz-seven.vercel.app/product-daily',
+    status: 'pending',
+  },
+  {
+    name: '5-2. 상품등록',
+    desc: '가을부터 사용',
+    owner: '김효은',
+    developer: '렛서',
+    category: '영업',
+    url: 'https://rototobebe-master.vercel.app/master',
+    status: 'live',
+    embedBlocked: true,
+  },
+  {
+    name: '5-3. 판매처 데이터 자동 업로드',
+    desc: '판매처별 데이터 자동 업로드 도구',
+    owner: '김도영',
+    developer: '렛서',
+    category: '영업',
+    url: 'https://rototobebe-data-loader.vercel.app/',
+    status: 'live',
+    embedBlocked: true,
+  },
+  // 6. CX
+  {
+    name: '6-1. 교환/반품/취소',
+    desc: '교환·반품·취소 데이터 분석',
+    owner: '이상희',
+    developer: '사내',
+    category: 'CX',
+    url: 'https://y-dusky-seven-89.vercel.app/',
+    status: 'live',
+  },
+  {
+    name: '6-2. 시즌별 불량 현황',
+    desc: '시즌별 불량 상품 취합 및 비교',
+    owner: '강민선',
+    developer: '사내',
+    category: 'CX',
+    url: 'https://quality-dashboard-five.vercel.app',
+    status: 'live',
+  },
+  // 7. 관리자
+  {
+    name: '권한 관리',
+    desc: '웹페이지 별 접근권한 관리',
+    owner: '배상현',
+    developer: '렛서',
+    category: '관리자',
+    url: 'https://rototobebe-admin.vercel.app/',
+    status: 'live',
+    embedBlocked: true,
+  },
 ];
 
 type Selection = { type: 'home' } | { type: 'category'; category: Category } | { type: 'dashboard'; name: string };
@@ -99,7 +220,7 @@ export default function HomePage() {
         d.name.toLowerCase().includes(q) ||
         d.desc.toLowerCase().includes(q) ||
         d.owner.toLowerCase().includes(q) ||
-        d.team.toLowerCase().includes(q),
+        d.developer.toLowerCase().includes(q),
     );
   }, [query]);
 
@@ -177,7 +298,7 @@ export default function HomePage() {
                           <span className="erp-nav-item-name">{d.name}</span>
                           {d.embedBlocked && <span className="erp-nav-item-ext" title="임베드 차단">↗</span>}
                           <span className={`erp-badge-mini ${isLive ? 'ok' : 'pending'}`}>
-                            {isLive ? '완료' : '개발중'}
+                            {isLive ? '완료' : '미완료'}
                           </span>
                         </button>
                       );
@@ -263,7 +384,7 @@ function HomeView() {
           <div className="erp-kpi-value">{live}<span>개</span></div>
         </div>
         <div className="erp-kpi">
-          <div className="erp-kpi-label">개발 중</div>
+          <div className="erp-kpi-label">미완료</div>
           <div className="erp-kpi-value">{pending}<span>개</span></div>
         </div>
         <div className="erp-kpi">
@@ -309,9 +430,9 @@ function CategoryView({ category, onSelect }: { category: Category; onSelect: (n
             <tr>
               <th style={{ width: 40 }}>#</th>
               <th>대시보드명</th>
-              <th style={{ width: 100 }}>담당자</th>
-              <th style={{ width: 140 }}>소속</th>
-              <th style={{ width: 100 }}>상태</th>
+              <th style={{ width: 160 }}>유지/담당</th>
+              <th style={{ width: 100 }}>개발자</th>
+              <th style={{ width: 100 }}>현상태</th>
               <th style={{ width: 80 }}></th>
             </tr>
           </thead>
@@ -324,10 +445,10 @@ function CategoryView({ category, onSelect }: { category: Category; onSelect: (n
                   <div className="erp-td-desc">{d.desc}</div>
                 </td>
                 <td>{d.owner}</td>
-                <td>{d.team}</td>
+                <td>{d.developer}</td>
                 <td>
                   <span className={`erp-pill ${d.status === 'live' ? 'ok' : 'pending'}`}>
-                    {d.status === 'live' ? '● 완료' : '● 개발중'}
+                    {d.status === 'live' ? '● 완료' : '● 미완료'}
                   </span>
                 </td>
                 <td className="erp-td-action">›</td>
@@ -363,7 +484,7 @@ function DashboardView({ dash }: { dash: Dashboard }) {
         <div className="erp-page-head">
           <div className="erp-page-title-row">
             <h1 className="erp-page-title">{dash.name}</h1>
-            <span className="erp-pill pending">● 개발중</span>
+            <span className="erp-pill pending">● 미완료</span>
           </div>
           <p className="erp-page-sub">{dash.desc}</p>
         </div>
@@ -372,13 +493,13 @@ function DashboardView({ dash }: { dash: Dashboard }) {
             <h2 className="erp-panel-title">기본 정보</h2>
           </div>
           <div className="erp-field-grid">
-            <div className="erp-field"><span>기능 분류</span><b>{dash.category}</b></div>
-            <div className="erp-field"><span>담당자</span><b>{dash.owner}</b></div>
-            <div className="erp-field"><span>소속</span><b>{dash.team}</b></div>
+            <div className="erp-field"><span>분류</span><b>{dash.category}</b></div>
+            <div className="erp-field"><span>유지/담당</span><b>{dash.owner}</b></div>
+            <div className="erp-field"><span>개발자</span><b>{dash.developer}</b></div>
             <div className="erp-field"><span>URL</span><b className="erp-url">—</b></div>
           </div>
           <div className="erp-actions">
-            <button className="erp-btn disabled" disabled>개발 중 (링크 준비 예정)</button>
+            <button className="erp-btn disabled" disabled>미완료 (링크 준비 예정)</button>
           </div>
         </div>
       </>
@@ -393,10 +514,10 @@ function DashboardView({ dash }: { dash: Dashboard }) {
             <div className="erp-embed-title">
               {dash.name}
               <span className={`erp-pill ${isLive ? 'ok' : 'pending'}`} style={{ marginLeft: 10, verticalAlign: 'middle' }}>
-                {isLive ? '● 완료' : '● 개발중'}
+                {isLive ? '● 완료' : '● 미완료'}
               </span>
             </div>
-            <div className="erp-embed-sub">{dash.desc} · {dash.team} · {dash.owner}</div>
+            <div className="erp-embed-sub">{dash.desc} · {dash.developer} · {dash.owner}</div>
           </div>
           <div className="erp-embed-actions">
             <button className="erp-btn ghost" onClick={() => setShowInfo(!showInfo)}>
@@ -409,7 +530,7 @@ function DashboardView({ dash }: { dash: Dashboard }) {
         </div>
         {showInfo && (
           <div className="erp-embed-info">
-            <div className="erp-field"><span>기능 분류</span><b>{dash.category}</b></div>
+            <div className="erp-field"><span>분류</span><b>{dash.category}</b></div>
             <div className="erp-field"><span>URL</span><b className="erp-url">{dash.url}</b></div>
           </div>
         )}
