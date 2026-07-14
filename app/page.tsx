@@ -25,14 +25,14 @@ type Dashboard = {
   embedBlocked?: boolean;
 };
 
-const CATEGORIES: { key: Category; num: string }[] = [
+const CATEGORIES: { key: Category; num: string; excludeFromStats?: boolean }[] = [
   { key: '경영/전략', num: '1' },
   { key: '상품', num: '2' },
   { key: '생산/품질', num: '3' },
   { key: '마케팅', num: '4' },
   { key: '영업', num: '5' },
   { key: 'CX', num: '6' },
-  { key: '관리자', num: '7' },
+  { key: '관리자', num: '※', excludeFromStats: true },
 ];
 
 const DASHBOARDS: Dashboard[] = [
@@ -278,7 +278,7 @@ export default function HomePage() {
                   <span className="erp-nav-chevron" onClick={(e) => { e.stopPropagation(); toggleCategory(cat.key); }}>
                     {isCollapsed ? '▸' : '▾'}
                   </span>
-                  <span className="erp-nav-num">{cat.num}.</span>
+                  <span className="erp-nav-num">{cat.num}{cat.num === '※' ? '' : '.'}</span>
                   <span className="erp-nav-cat-name">{cat.key}</span>
                   <span className="erp-nav-count">{items.length}</span>
                 </button>
@@ -364,8 +364,12 @@ export default function HomePage() {
 }
 
 function HomeView() {
-  const total = DASHBOARDS.length;
-  const live = DASHBOARDS.filter((d) => d.status === 'live').length;
+  const excludedCats = new Set(CATEGORIES.filter((c) => c.excludeFromStats).map((c) => c.key));
+  const statDashboards = DASHBOARDS.filter((d) => !excludedCats.has(d.category));
+  const statCategories = CATEGORIES.filter((c) => !c.excludeFromStats);
+
+  const total = statDashboards.length;
+  const live = statDashboards.filter((d) => d.status === 'live').length;
   const pending = total - live;
 
   return (
@@ -390,7 +394,7 @@ function HomeView() {
         </div>
         <div className="erp-kpi">
           <div className="erp-kpi-label">기능 그룹</div>
-          <div className="erp-kpi-value">{CATEGORIES.length}<span>개</span></div>
+          <div className="erp-kpi-value">{statCategories.length}<span>개</span></div>
         </div>
       </div>
 
@@ -399,7 +403,7 @@ function HomeView() {
           <h2 className="erp-panel-title">기능별 개요</h2>
         </div>
         <div className="erp-cat-grid">
-          {CATEGORIES.map((cat) => {
+          {statCategories.map((cat) => {
             const count = DASHBOARDS.filter((d) => d.category === cat.key).length;
             if (count === 0) return null;
             return (
