@@ -25,14 +25,14 @@ type Dashboard = {
   embedBlocked?: boolean;
 };
 
-const CATEGORIES: { key: Category; icon: string }[] = [
-  { key: '경영/전략', icon: '◆' },
-  { key: '상품', icon: '▤' },
-  { key: '생산/품질', icon: '⚙' },
-  { key: '마케팅', icon: '⚡' },
-  { key: '영업', icon: '$' },
-  { key: 'CX', icon: '↺' },
-  { key: '관리자', icon: '⚿' },
+const CATEGORIES: { key: Category; num: string }[] = [
+  { key: '경영/전략', num: '1' },
+  { key: '상품', num: '2' },
+  { key: '생산/품질', num: '3' },
+  { key: '마케팅', num: '4' },
+  { key: '영업', num: '5' },
+  { key: 'CX', num: '6' },
+  { key: '관리자', num: '7' },
 ];
 
 const DASHBOARDS: Dashboard[] = [
@@ -278,7 +278,7 @@ export default function HomePage() {
                   <span className="erp-nav-chevron" onClick={(e) => { e.stopPropagation(); toggleCategory(cat.key); }}>
                     {isCollapsed ? '▸' : '▾'}
                   </span>
-                  <span className="erp-nav-icon">{cat.icon}</span>
+                  <span className="erp-nav-num">{cat.num}.</span>
                   <span className="erp-nav-cat-name">{cat.key}</span>
                   <span className="erp-nav-count">{items.length}</span>
                 </button>
@@ -297,6 +297,7 @@ export default function HomePage() {
                           <span className="erp-nav-item-dot" />
                           <span className="erp-nav-item-name">{d.name}</span>
                           {d.embedBlocked && <span className="erp-nav-item-ext" title="임베드 차단">↗</span>}
+                          <span className="erp-nav-item-dev">{d.developer}</span>
                           <span className={`erp-badge-mini ${isLive ? 'ok' : 'pending'}`}>
                             {isLive ? '완료' : '미완료'}
                           </span>
