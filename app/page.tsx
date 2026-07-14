@@ -6,7 +6,7 @@ type Status = 'live' | 'pending';
 type Developer = '렛서' | '사내';
 
 type Category =
-  | '경영/전략'
+  | '경영/관리'
   | '상품'
   | '생산/품질'
   | '마케팅'
@@ -26,7 +26,7 @@ type Dashboard = {
 };
 
 const CATEGORIES: { key: Category; num: string; excludeFromStats?: boolean }[] = [
-  { key: '경영/전략', num: '1' },
+  { key: '경영/관리', num: '1' },
   { key: '상품', num: '2' },
   { key: '생산/품질', num: '3' },
   { key: '마케팅', num: '4' },
@@ -42,7 +42,7 @@ const DASHBOARDS: Dashboard[] = [
     desc: '마켓 센싱 웹페이지',
     owner: '김선애',
     developer: '렛서',
-    category: '경영/전략',
+    category: '경영/관리',
     url: 'https://rototobebe-market-sensing.vercel.app/dashboard',
     status: 'live',
     embedBlocked: true,
@@ -52,7 +52,7 @@ const DASHBOARDS: Dashboard[] = [
     desc: 'DB적재완료 후 사용',
     owner: '신규담당자 (입사 전까지 조현진)',
     developer: '렛서',
-    category: '경영/전략',
+    category: '경영/관리',
     url: 'https://rototobebe-fpna.vercel.app/',
     status: 'pending',
     embedBlocked: true,
@@ -62,7 +62,7 @@ const DASHBOARDS: Dashboard[] = [
     desc: '내용확인필요',
     owner: '이종민',
     developer: '사내',
-    category: '경영/전략',
+    category: '경영/관리',
     url: 'https://ax-dashboard-opal.vercel.app/budget',
     status: 'pending',
   },
