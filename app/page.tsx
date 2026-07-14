@@ -127,12 +127,12 @@ const DASHBOARDS: Dashboard[] = [
   },
   {
     name: '4-3. 브랜드마케팅 운영',
-    desc: '현재 접속 안 됨, 페이지 통합 예정 (인스타·네이버·로덬메이트)',
+    desc: '인스타·네이버·로덬메이트 통합 허브',
     owner: '김선애',
     developer: '사내',
     category: '마케팅',
-    url: 'https://rototobebe-mkt.vercel.app/',
-    status: 'pending',
+    url: 'https://rtt-hub.vercel.app/',
+    status: 'live',
   },
   // 5. 영업
   {
