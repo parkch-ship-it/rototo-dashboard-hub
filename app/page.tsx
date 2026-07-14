@@ -404,7 +404,7 @@ function HomeView() {
             if (count === 0) return null;
             return (
               <div key={cat.key} className="erp-cat-card">
-                <div className="erp-cat-icon">{cat.icon}</div>
+                <div className="erp-cat-icon">{cat.num}</div>
                 <div className="erp-cat-name">{cat.key}</div>
                 <div className="erp-cat-count">{count}개</div>
               </div>
