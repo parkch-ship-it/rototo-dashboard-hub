@@ -522,7 +522,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 .erp {
   display: grid;
-  grid-template-columns: 264px 1fr;
+  grid-template-columns: 300px 1fr;
   min-height: 100vh;
   background: var(--erp-bg);
   color: var(--erp-text);
@@ -683,18 +683,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: #fff;
   color: var(--erp-accent);
 }
-.erp-nav-items { padding: 2px 0 4px 20px; }
+.erp-nav-items { padding: 2px 0 4px 14px; }
 .erp-nav-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
-  padding: 6px 10px 6px 14px;
+  padding: 6px 8px 6px 10px;
   border-radius: 6px;
   font-size: 12.5px;
   color: var(--erp-text-muted);
   text-align: left;
   transition: background 0.12s, color 0.12s;
+  min-width: 0;
 }
 .erp-nav-item:hover { background: var(--erp-hover); color: var(--erp-text); }
 .erp-nav-item.active {
@@ -718,10 +719,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .erp-badge-mini {
   font-size: 9.5px;
-  padding: 1px 6px;
+  padding: 1px 5px;
   border-radius: 999px;
   font-weight: 600;
   flex-shrink: 0;
+  letter-spacing: -0.02em;
 }
 .erp-badge-mini.ok { background: var(--erp-ok-bg); color: var(--erp-ok); }
 .erp-badge-mini.pending { background: var(--erp-pending-bg); color: var(--erp-pending); }
@@ -732,13 +734,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .erp-nav-item.active .erp-nav-item-ext { color: var(--erp-accent); }
 .erp-nav-item-dev {
-  font-size: 10px;
+  font-size: 9.5px;
   color: var(--erp-text-soft);
   flex-shrink: 0;
-  padding: 1px 5px;
+  padding: 1px 4px;
   background: var(--erp-border-soft);
   border-radius: 4px;
   font-weight: 500;
+  letter-spacing: -0.02em;
 }
 .erp-nav-item.active .erp-nav-item-dev {
   background: #fff;
